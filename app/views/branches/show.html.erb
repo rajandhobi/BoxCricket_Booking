@@ -1,0 +1,30 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @branch %>
+
+
+
+<h2>Grounds in this Branch</h2>
+
+<% if @grounds.any? %>
+  <ul>
+    <% @grounds.each do |ground| %>
+      <li>
+<%= link_to ground.name, branch_ground_path(@branch, ground) %>
+        <%= ground.ground_type %> (₹<%= ground.price_per_hour %>/hr)
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No grounds found for this branch.</p>
+<% end %>
+
+<%= link_to "Add a New Ground", new_branch_ground_path(@branch), class: "btn btn-primary" %>
+
+
+<div>
+  <%= link_to "Edit this branch", edit_branch_path(@branch) %> <br>
+  <%= link_to "Back to branches", branches_path %>
+
+  <%= button_to "Destroy this branch", @branch, method: :delete %>
+</div>

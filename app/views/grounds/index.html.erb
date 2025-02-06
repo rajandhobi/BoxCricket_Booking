@@ -1,0 +1,18 @@
+<p style="color: green"><%= notice %></p>
+
+<% content_for :title, "Grounds" %>
+
+<h1>Grounds</h1>
+
+<div id="grounds">
+  <% @grounds.each do |ground| %>
+    <%= render ground %>
+    <p>
+<%= link_to "Show this ground", branch_ground_path(@branch, ground) %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New ground", new_branch_ground_path(@branch) %>
+<%= link_to "Back to branches", branches_path %>
+

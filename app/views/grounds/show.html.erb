@@ -1,0 +1,12 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @ground %>
+
+<div>
+<%= link_to "Edit this ground", edit_branch_ground_path(@ground.branch, @ground) %> |
+<%= link_to "Back to grounds", branch_grounds_path(@ground.branch) %>
+
+<%= button_to "Destroy this ground", branch_ground_path(@ground.branch, @ground), method: :delete %>
+<%= link_to "Cancel", "javascript:history.back()", class: "btn btn-secondary" %>
+
+</div>

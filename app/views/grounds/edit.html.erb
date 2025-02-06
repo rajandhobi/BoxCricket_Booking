@@ -1,0 +1,12 @@
+<% content_for :title, "Editing ground" %>
+
+<h1>Editing ground</h1>
+
+<%= render "form", ground: @ground %>
+
+<br>
+
+<div>
+  <%= link_to "Show this ground", @ground %> |
+  <%= link_to "Back to grounds", grounds_path %>
+</div>

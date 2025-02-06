@@ -1,0 +1,102 @@
+<%= form_with(model: ground, url: branch_grounds_path(@branch)) do |form| %>
+  <% if ground.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(ground.errors.count, "error") %> prohibited this ground from being saved:</h2>
+
+      <ul>
+        <% ground.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :name, style: "display: block" %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div>
+    <%= form.label :location, style: "display: block" %>
+    <%= form.text_field :location %>
+  </div>
+
+  <div>
+    <%= form.label :city, style: "display: block" %>
+    <%= form.text_field :city %>
+  </div>
+
+  <div>
+    <%= form.label :state, style: "display: block" %>
+    <%= form.text_field :state %>
+  </div>
+
+  <div>
+    <%= form.label :country, style: "display: block" %>
+    <%= form.text_field :country %>
+  </div>
+
+  <div>
+    <%= form.label :pincode, style: "display: block" %>
+    <%= form.text_field :pincode %>
+  </div>
+
+  <div>
+    <%= form.label :ground_type, style: "display: block" %>
+    <%= form.text_field :ground_type %>
+  </div>
+
+  <div>
+    <%= form.label :capicity, style: "display: block" %>
+    <%= form.number_field :capicity %>
+  </div>
+
+  <div>
+    <%= form.label :price_per_hour, style: "display: block" %>
+    <%= form.text_field :price_per_hour %>
+  </div>
+
+  <div>
+    <%= form.label :availabiity, style: "display: block" %>
+    <%= form.checkbox :availabiity %>
+  </div>
+
+  <div>
+    <%= form.label :open_time, style: "display: block" %>
+    <%= form.time_field :open_time %>
+  </div>
+
+  <div>
+    <%= form.label :close_time, style: "display: block" %>
+    <%= form.time_field :close_time %>
+  </div>
+
+  <div>
+    <%= form.label :facility, style: "display: block" %>
+    <%= form.textarea :facility %>
+  </div>
+
+  <div>
+    <%= form.label :contact_number, style: "display: block" %>
+    <%= form.text_field :contact_number %>
+  </div>
+
+  <div>
+    <%= form.label :email, style: "display: block" %>
+    <%= form.text_field :email %>
+  </div>
+
+  <div>
+    <%= form.label :description, style: "display: block" %>
+    <%= form.textarea :description %>
+  </div>
+
+  <div>
+    <%= form.label :branch_id, style: "display: block" %>
+    <%= form.text_field :branch_id %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,39 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  location: MyString
+  city: MyString
+  state: MyString
+  country: MyString
+  pincode: MyString
+  ground_type: MyString
+  capicity: 1
+  price_per_hourse: 9.99
+  availabiity: false
+  open_time: 2025-02-06 15:52:12
+  close_time: 2025-02-06 15:52:12
+  facility: MyText
+  contact_number: MyString
+  email: MyString
+  description: MyText
+  branch: one
+
+two:
+  name: MyString
+  location: MyString
+  city: MyString
+  state: MyString
+  country: MyString
+  pincode: MyString
+  ground_type: MyString
+  capicity: 1
+  price_per_hourse: 9.99
+  availabiity: false
+  open_time: 2025-02-06 15:52:12
+  close_time: 2025-02-06 15:52:12
+  facility: MyText
+  contact_number: MyString
+  email: MyString
+  description: MyText
+  branch: two
