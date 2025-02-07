@@ -2,6 +2,8 @@ class GroundsController < ApplicationController
   before_action :set_branch  # Ensure branch is set before creating ground
 
   before_action :set_ground, only: %i[ show edit update destroy ]
+  before_action :authenticate_user!
+
 
   # GET /grounds or /grounds.json
   def index

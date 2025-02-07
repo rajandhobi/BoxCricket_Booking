@@ -1,4 +1,5 @@
 class BranchesController < ApplicationController
+  before_action :authenticate_user!,except: %i[index]
   before_action :set_branch, only: %i[ show edit update destroy ]
 
   # GET /branches or /branches.json
