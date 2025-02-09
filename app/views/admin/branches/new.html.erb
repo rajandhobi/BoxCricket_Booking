@@ -1,0 +1,14 @@
+<h1>New Branch</h1>
+<%= form_with model: @branch, url: admin_branches_path, local: true do |f| %>
+  <p>
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :description %><br>
+    <%= f.text_field :description %>
+  </p>
+  <p>
+    <%= f.submit "Create Branch" %>
+  </p>
+<% end %>

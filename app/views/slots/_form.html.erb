@@ -1,0 +1,13 @@
+<%= form_with(model: @slot, url: @slot.new_record? ? branch_ground_slots_path(@branch, @ground) : branch_ground_slot_path(@branch, @ground, @slot), method: @slot.new_record? ? :post : :patch, local: true) do |form| %>
+    <%= form.label :start_time %>
+    <%= form.time_select :start_time %>
+  
+    <%= form.label :end_time %>
+    <%= form.time_select :end_time %>
+  
+    <%= form.label :price %>
+    <%= form.number_field :price %>
+  
+    <%= form.submit %>
+  <% end %>
+  

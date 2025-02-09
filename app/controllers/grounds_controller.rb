@@ -2,6 +2,10 @@ class GroundsController < ApplicationController
   before_action :set_branch  # Ensure branch is set before creating ground
 
   before_action :set_ground, only: %i[ show edit update destroy ]
+  before_action :authenticate_user!
+  before_action :authorize_ground, only: [:edit, :update, :destroy]
+
+
 
   # GET /grounds or /grounds.json
   def index
@@ -17,6 +21,8 @@ class GroundsController < ApplicationController
   # GET /grounds/new
   def new
     @ground = @branch.grounds.new
+
+    authorize @ground
   end
  
 
@@ -39,6 +45,8 @@ class GroundsController < ApplicationController
 
   def create
     @ground = @branch.grounds.new(ground_params)
+    authorize @ground
+
 
     respond_to do |format|
       if @ground.save
@@ -54,6 +62,8 @@ class GroundsController < ApplicationController
 
   # PATCH/PUT /grounds/1 or /grounds/1.json
   def update
+    authorize @ground
+
     respond_to do |format|
       if @ground.update(ground_params)
         format.html { redirect_to branch_ground_path(@branch, @ground), notice: "Ground was successfully updated." }
@@ -67,7 +77,10 @@ class GroundsController < ApplicationController
 
   # DELETE /grounds/1 or /grounds/1.json
   def destroy
+    authorize @ground
+
     @ground.destroy!
+
 
     respond_to do |format|
       format.html { redirect_to branch_path(@branch), status: :see_other, notice: "Ground was successfully destroyed." }
@@ -83,11 +96,22 @@ class GroundsController < ApplicationController
     end
 
     def set_ground
-      @ground = Ground.find(params[:id])
+      @ground = @branch.grounds.find(params[:id]) if @branch
     end
+
+    def authorize_ground
+      authorize @ground
+    end
+    
 
     # Only allow a list of trusted parameters through.
     def ground_params
-      params.require(:ground).permit([ :name, :location, :city, :state, :country, :pincode, :ground_type, :capicity, :price_per_hour, :availabiity, :open_time, :close_time, :facility, :contact_number, :email, :description, :branch_id ])
+      params.require(:ground).permit(
+        :name, :location, :city, :state, :country, :pincode, :ground_type, 
+        :capicity, :price_per_hour, :availabiity, :open_time, :close_time, 
+        :facility, :contact_number, :email, :description, :branch_id,
+        slots_attributes: [:id, :start_time, :end_time, :price, :_destroy]
+      )
     end
+    
 end

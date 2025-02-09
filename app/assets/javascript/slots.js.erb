@@ -1,0 +1,28 @@
+document.addEventListener("DOMContentLoaded", function() {
+  document.getElementById("add-slot").addEventListener("click", function(event) {
+    event.preventDefault();
+    
+    let slotsDiv = document.getElementById("slots");
+    let index = slotsDiv.children.length;
+
+    let newSlotFields = `
+      <div class="slot-fields">
+        <input type="hidden" name="ground[slots_attributes][${index}][id]" value="">
+
+        <label>Start Time</label>
+        <input type="text" name="ground[slots_attributes][${index}][start_time]" />
+
+        <label>End Time</label>
+        <input type="text" name="ground[slots_attributes][${index}][end_time]" />
+
+        <label>Price</label>
+        <input type="number" name="ground[slots_attributes][${index}][price]" />
+
+        <input type="checkbox" name="ground[slots_attributes][${index}][_destroy]" />
+        <label>Remove this slot</label>
+      </div>
+    `;
+
+    slotsDiv.insertAdjacentHTML("beforeend", newSlotFields);
+  });
+});

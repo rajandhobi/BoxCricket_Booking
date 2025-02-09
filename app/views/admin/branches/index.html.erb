@@ -1,0 +1,17 @@
+<h1>Branches</h1>
+<%= link_to 'New Branch', new_admin_branch_path, class: "btn btn-primary" %>
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Actions</th>
+  </tr>
+  <% @branches.each do |branch| %>
+    <tr>
+      <td><%= branch.name %></td>
+      <td>
+        <%= link_to 'Edit', edit_admin_branch_path(branch) %> |
+        <%= link_to 'Delete', admin_branch_path(branch), method: :delete, data: { confirm: 'Are you sure?' } %>
+      </td>
+    </tr>
+  <% end %>
+</table>

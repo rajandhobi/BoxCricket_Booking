@@ -1,5 +1,8 @@
 class BranchesController < ApplicationController
+  before_action :authenticate_user!,except: %i[index]
   before_action :set_branch, only: %i[ show edit update destroy ]
+  before_action :authorize_branch, only: [:edit, :update, :destroy]
+
 
   # GET /branches or /branches.json
   def index
@@ -15,6 +18,7 @@ class BranchesController < ApplicationController
   # GET /branches/new
   def new
     @branch = Branch.new
+    authorize @branch
   end
 
   # GET /branches/1/edit
@@ -24,6 +28,8 @@ class BranchesController < ApplicationController
   # POST /branches or /branches.json
   def create
     @branch = Branch.new(branch_params)
+    authorize @branch
+
 
     respond_to do |format|
       if @branch.save
@@ -38,6 +44,8 @@ class BranchesController < ApplicationController
 
   # PATCH/PUT /branches/1 or /branches/1.json
   def update
+    authorize @branch
+
     respond_to do |format|
       if @branch.update(branch_params)
         format.html { redirect_to @branch, notice: "Branch was successfully updated." }
@@ -51,6 +59,8 @@ class BranchesController < ApplicationController
 
   # DELETE /branches/1 or /branches/1.json
   def destroy
+    authorize @branch
+
     @branch.destroy!
 
     respond_to do |format|
@@ -65,8 +75,12 @@ class BranchesController < ApplicationController
       @branch = Branch.find(params[:id])
     end
 
+    def authorize_branch
+      authorize @branch
+    end
+
     # Only allow a list of trusted parameters through.
     def branch_params
-      params.expect(branch: [ :name, :description ])
+      params.require(:branch).permit(:name, :description)
     end
 end

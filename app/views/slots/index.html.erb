@@ -1,0 +1,32 @@
+<h2>Slots</h2>
+<%= link_to "Add Slot", new_branch_ground_slot_path(@branch, @ground), class: "btn btn-primary" %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Start Time</th>
+      <th>End Time</th>
+      <th>Price</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @slots.each do |slot| %>
+      <tr>
+        <td><%= slot.start_time.strftime("%I:%M %p") %></td>
+        <td><%= slot.end_time.strftime("%I:%M %p") %></td>
+        <td><%= slot.price %></td>
+        <td>
+<%= link_to "Edit", edit_branch_ground_slot_path(@branch, @ground, slot) %>|
+<%= button_to "Delete", branch_ground_slot_path(@branch, @ground, slot), 
+             method: :delete, 
+             data: { confirm: "Are you sure?" }, 
+             class: "btn btn-danger" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to "Back to Ground", branch_ground_path(@branch, @ground), class: "btn btn-secondary mt-3" %>
+
