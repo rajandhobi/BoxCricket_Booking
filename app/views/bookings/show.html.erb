@@ -3,3 +3,16 @@
 <p>Time: <%= @booking.slot.start_time.strftime("%I:%M %p") %> - <%= @booking.slot.end_time.strftime("%I:%M %p") %></p>
 <p>Price: ₹<%= @booking.slot.price %></p>
 <%= button_to "Cancel Booking", branch_ground_slot_booking_path(@branch, @ground, slot.booking), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %>
+
+
+<% if current_user.has_role?(:admin) %>
+  <h1>Booking Details</h1>
+
+  <p><strong>User:</strong> <%= @booking.user.email %></p>
+  <p><strong>Slot Time:</strong> <%= @booking.slot.start_time %> - <%= @booking.slot.end_time %></p>
+  <p><strong>Status:</strong> <%= @booking.status %></p>
+
+  <%= link_to "Back to Bookings", bookings_path, class: "btn btn-secondary" %>
+<% else %>
+  <p class="alert alert-danger">You are not authorized to view this page.</p>
+<% end %>

@@ -1,5 +1,7 @@
 class BookingsController < ApplicationController
     before_action :authenticate_user!
+    before_action :authorize_admin, only: [:show] # Only admins can see booking details
+
 
     def show
         @slot = Slot.find(params[:id])
@@ -50,6 +52,15 @@ class BookingsController < ApplicationController
           redirect_to branch_ground_slots_path(@branch, @ground), alert: "Failed to cancel booking."
         end
       end
+
+  private
+
+  
+  def authorize_admin
+    unless current_user.has_role?(:admin)  # Checks if user is an admin
+      redirect_to root_path, alert: "Access denied! You are not authorized to view this page."
+    end
+  end
       
     
 end      

@@ -2,76 +2,72 @@
 
 <%= render @ground %>
 
-<h3>Slots</h3>
-<%= link_to "Add Slot", new_branch_ground_slot_path(@branch, @ground), class: "btn btn-primary" %>
+<% if current_user.has_role?(:admin) || current_user.has_role?(:super_admin) %>
+  <h3>Slots</h3>
+  <%= link_to "Add Slot", new_branch_ground_slot_path(@branch, @ground), class: "btn btn-primary" %>
 
-<table>
-  <thead>
-    <tr>
-      <th>Start Time</th>
-      <th>End Time</th>
-      <th>Price</th>
-      <th>Status</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @ground.slots.each do |slot| %>
+  <table>
+    <thead>
       <tr>
-        <td><%= slot.start_time.strftime("%I:%M %p") %></td>
-        <td><%= slot.end_time.strftime("%I:%M %p") %></td>
-        <td><%= slot.price %></td>
-        <td><%= slot.status.capitalize %></td>
-
-        <td>
-          <%= link_to "Edit Slot", edit_branch_ground_slot_path(@branch, @ground, slot), class: "btn btn-warning" %>
-          <%= button_to "Delete", branch_ground_slot_path(@branch,@ground, slot), method: :delete, data: { confirm: "Are you sure?" } %>
-        </td>
+        <th>Start Time</th>
+        <th>End Time</th>
+        <th>Price</th>
+        <th>Status</th>
+        <th>Actions</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <% @ground.slots.each do |slot| %>
+        <tr>
+          <td><%= slot.start_time.strftime("%I:%M %p") %></td>
+          <td><%= slot.end_time.strftime("%I:%M %p") %></td>
+          <td><%= slot.price %></td>
+          <td><%= slot.status.capitalize %></td>
 
-
-<h2>Available Slots</h2>
-
-<% @ground.slots.each do |slot| %>
-  <div>
-    <p>Time: <%= slot.start_time.strftime("%I:%M %p") %> - <%= slot.end_time.strftime("%I:%M %p") %></p>
-    <p>Price: ₹<%= slot.price %></p>
-
-    <% if slot.booking.nil? %>
-      <% if policy(Booking).create? %>
-        <%= button_to "Book Now", branch_ground_slot_booking_path(@branch, @ground, slot), method: :post, class: "btn btn-primary" %>
-      <% else %>
-        <p class="text-warning">You don't have permission to book.</p>
+          <td>
+            <%= link_to "Edit Slot", edit_branch_ground_slot_path(@branch, @ground, slot), class: "btn btn-warning" %>
+            <%= button_to "Delete", branch_ground_slot_path(@branch, @ground, slot), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %>
+          </td>
+        </tr>
       <% end %>
-    <% else %>
-      <span class="text-danger">Already Booked</span>
-
-      <!-- Show Cancel Booking Button if current_user booked this slot -->
-     <% if slot.booking && slot.booking.user == current_user %>
-  <%= button_to "Cancel Booking", branch_ground_slot_booking_path(@branch, @ground, slot), 
-      method: :delete, 
-      data: { confirm: "Are you sure you want to cancel this booking?" }, 
-      class: "btn btn-danger" %>
+    </tbody>
+  </table>
 <% end %>
 
-    <% end %>
-  </div>
+<% unless current_user.has_role?(:admin) || current_user.has_role?(:super_admin) %>
+  <h2>Available Slots</h2>
+
+  <% @ground.slots.each do |slot| %>
+    <div>
+      <p>Time: <%= slot.start_time.strftime("%I:%M %p") %> - <%= slot.end_time.strftime("%I:%M %p") %></p>
+      <p>Price: ₹<%= slot.price %></p>
+
+      <% if slot.booking.nil? %>
+        <% if policy(Booking).create? %>
+          <%= button_to "Book Now", branch_ground_slot_booking_path(@branch, @ground, slot), method: :post, class: "btn btn-primary" %>
+        <% else %>
+          <p class="text-warning">You don't have permission to book.</p>
+        <% end %>
+      <% else %>
+        <span class="text-danger">Already Booked</span>
+
+        <!-- Show Cancel Booking Button if current_user booked this slot -->
+        <% if slot.booking && slot.booking.user == current_user %>
+          <%= button_to "Cancel Booking", branch_ground_slot_booking_path(@branch, @ground, slot), 
+              method: :delete, 
+              data: { confirm: "Are you sure you want to cancel this booking?" }, 
+              class: "btn btn-danger" %>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
 <% end %>
-
-
-
-
 
 <div>
-
-        
-<%= link_to "Edit this ground", edit_branch_ground_path(@ground.branch, @ground) %> |
-<%= link_to "Back to grounds", branch_grounds_path(@ground.branch) %>
-
-<%= button_to "Destroy this ground", branch_ground_path(@ground.branch, @ground), method: :delete %>
-<%= link_to "Cancel", "javascript:history.back()", class: "btn btn-secondary" %>
-
+  <% if current_user.has_role?(:admin) || current_user.has_role?(:super_admin) %>
+    <%= link_to "Edit this ground", edit_branch_ground_path(@ground.branch, @ground), class: "btn btn-warning" %> |
+    <%= button_to "Destroy this ground", branch_ground_path(@ground.branch, @ground), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %>
+  <% end %>
+  
+  <%= link_to "Back to grounds", branch_path(@branch), class: "btn btn-secondary" %>
 </div>

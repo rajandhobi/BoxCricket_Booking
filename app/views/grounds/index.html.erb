@@ -13,6 +13,8 @@
   <% end %>
 </div>
 
-<%= link_to "New ground", new_branch_ground_path(@branch) %>
-<%= link_to "Back to cities", branches_path %>
+<%= link_to "New ground", new_branch_ground_path(@branch) %> <br>
+
+<%= link_to "Back to city Grounds", branch_path(@branch), class: "btn btn-secondary" %>
+
 

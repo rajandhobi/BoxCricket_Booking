@@ -1,2 +1,5 @@
 <h1>Edit Slot</h1>
 <%= render 'form', slot: @slot %>
+<%= link_to "Back to ground", branch_ground_path(@branch, @ground) %> <br>
+<%= link_to "Slots", branch_ground_slots_path(@branch, @ground), class: "btn btn-secondary" %> <br>
+

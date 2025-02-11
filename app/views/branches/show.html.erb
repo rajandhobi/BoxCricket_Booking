@@ -2,15 +2,13 @@
 
 <%= render @branch %>
 
-
-
 <h2>Grounds in <%= @branch.city %></h2>
 
 <% if @grounds.any? %>
   <ul>
     <% @grounds.each do |ground| %>
       <li>
-<%= link_to ground.name, branch_ground_path(@branch, ground) %>
+        <%= link_to ground.name, branch_ground_path(@branch, ground) %>  [ <%= ground.location %> ]
       </li>
     <% end %>
   </ul>
@@ -18,12 +16,15 @@
   <p>No grounds available for this branch.</p>
 <% end %>
 
-<%= link_to "Add a New Ground", new_branch_ground_path(@branch), class: "btn btn-primary" %>
-
+<% if current_user.has_role?(:admin) || current_user.has_role?(:super_admin) %>
+  <%= link_to "Add a New Ground", new_branch_ground_path(@branch), class: "btn btn-primary" %>
+<% end %>
 
 <div>
-  <%= link_to "Edit this city", edit_branch_path(@branch) %> <br>
+  <% if current_user.has_role?(:admin) || current_user.has_role?(:super_admin) %>
+    <%= link_to "Edit this city", edit_branch_path(@branch) %> <br>
+    <%= button_to "Destroy this city", @branch, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %>
+  <% end %>
+  
   <%= link_to "Back to cities", branches_path %>
-
-  <%= button_to "Destroy this city", @branch, method: :delete %>
 </div>

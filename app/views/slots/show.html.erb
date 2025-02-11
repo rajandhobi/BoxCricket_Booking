@@ -7,5 +7,6 @@
 <% if @slot.booking.present? %>
   <p><strong>Booked By:</strong> <%= @slot.booking.user.email %></p>
 <% end %>
-<%= link_to "Edit Slot", edit_branch_ground_slot_path(@branch, @ground, @slot), class: "btn btn-warning" %>
-<%= link_to "Back to Slots", branch_ground_slots_path(@branch, @ground), class: "btn btn-secondary" %>
+<%= link_to "Edit Slot", edit_branch_ground_slot_path(@branch, @ground, @slot), class: "btn btn-warning" %> <br>
+<%= link_to "Back to Slots", branch_ground_slots_path(@branch, @ground), class: "btn btn-secondary" %> <br>
+<%= link_to "Back to ground", branch_ground_path(@branch, @ground) %>
