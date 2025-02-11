@@ -15,7 +15,7 @@ class BookingsController < ApplicationController
   
       authorize @slot, :book?
   
-      if @slot.booking.nil?
+      if @slot.status == "available"
         @booking = @slot.create_booking(user: current_user, status: "booked")
   
         if @booking.persisted?
@@ -41,6 +41,8 @@ class BookingsController < ApplicationController
         authorize @booking  # Ensure the user has permission to cancel
       
         if @booking.destroy
+          @slot.update(status: "available")  # Reset slot status
+
           puts "Booking successfully deleted!"  # Debugging log
           redirect_to branch_ground_slots_path(@branch, @ground), notice: "Booking canceled successfully."
         else
