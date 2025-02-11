@@ -7,6 +7,9 @@
   
     <%= form.label :price %>
     <%= form.number_field :price %>
+
+    <%= form.label :status, "Slot Status" %>
+  <%= form.select :status, Slot::STATUSES, {}, class: "form-control" %>
   
     <%= form.submit %>
   <% end %>

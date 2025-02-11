@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_08_151243) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_10_045454) do
   create_table "bookings", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "slot_id", null: false
@@ -22,8 +22,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_08_151243) do
   end
 
   create_table "branches", force: :cascade do |t|
-    t.string "name"
-    t.text "description"
+    t.string "city"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "user_id"
@@ -81,6 +80,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_08_151243) do
     t.integer "ground_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "status", default: "available"
     t.index ["ground_id"], name: "index_slots_on_ground_id"
   end
 

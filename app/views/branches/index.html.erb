@@ -2,15 +2,15 @@
 
 <% content_for :title, "Branches" %> 
 
-<h1>Branches</h1> 
+<h1>Cities</h1> 
 
 <div id="branches">
-<h3> Total branches available : <%= @branches.count %> </h3>
+<h3> Total cities available : <%= @branches.count %> </h3>
 
 <ul>
   <% @branches.each do |branch| %>
     <li>
-    <%= link_to branch.name ,branch%> <br>
+    <%= link_to branch.city ,branch%> <br>
       available grounds : <%= branch.grounds.count %>  <br>
       <% if policy(branch).edit? %>
 

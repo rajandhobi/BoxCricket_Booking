@@ -1,0 +1,5 @@
+<h2>Your Booking Details</h2>
+
+<p>Time: <%= @booking.slot.start_time.strftime("%I:%M %p") %> - <%= @booking.slot.end_time.strftime("%I:%M %p") %></p>
+<p>Price: ₹<%= @booking.slot.price %></p>
+<%= button_to "Cancel Booking", branch_ground_slot_booking_path(@branch, @ground, slot.booking), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %>

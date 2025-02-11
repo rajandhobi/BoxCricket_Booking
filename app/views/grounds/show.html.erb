@@ -11,6 +11,7 @@
       <th>Start Time</th>
       <th>End Time</th>
       <th>Price</th>
+      <th>Status</th>
       <th>Actions</th>
     </tr>
   </thead>
@@ -20,14 +21,46 @@
         <td><%= slot.start_time.strftime("%I:%M %p") %></td>
         <td><%= slot.end_time.strftime("%I:%M %p") %></td>
         <td><%= slot.price %></td>
+        <td><%= slot.status.capitalize %></td>
+
         <td>
-<%= link_to "Edit Slot", edit_branch_ground_slot_path(@branch, @ground, slot), class: "btn btn-warning" %>
+          <%= link_to "Edit Slot", edit_branch_ground_slot_path(@branch, @ground, slot), class: "btn btn-warning" %>
           <%= button_to "Delete", branch_ground_slot_path(@branch,@ground, slot), method: :delete, data: { confirm: "Are you sure?" } %>
         </td>
       </tr>
     <% end %>
   </tbody>
 </table>
+
+
+<h2>Available Slots</h2>
+
+<% @ground.slots.each do |slot| %>
+  <div>
+    <p>Time: <%= slot.start_time.strftime("%I:%M %p") %> - <%= slot.end_time.strftime("%I:%M %p") %></p>
+    <p>Price: ₹<%= slot.price %></p>
+
+    <% if slot.booking.nil? %>
+      <% if policy(Booking).create? %>
+        <%= button_to "Book Now", branch_ground_slot_booking_path(@branch, @ground, slot), method: :post, class: "btn btn-primary" %>
+      <% else %>
+        <p class="text-warning">You don't have permission to book.</p>
+      <% end %>
+    <% else %>
+      <span class="text-danger">Already Booked</span>
+
+      <!-- Show Cancel Booking Button if current_user booked this slot -->
+     <% if slot.booking && slot.booking.user == current_user %>
+  <%= button_to "Cancel Booking", branch_ground_slot_booking_path(@branch, @ground, slot), 
+      method: :delete, 
+      data: { confirm: "Are you sure you want to cancel this booking?" }, 
+      class: "btn btn-danger" %>
+<% end %>
+
+    <% end %>
+  </div>
+<% end %>
+
 
 
 

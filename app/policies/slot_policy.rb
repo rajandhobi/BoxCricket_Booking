@@ -9,6 +9,9 @@ class SlotPolicy
   def new?
     true
   end
+  def book?
+    user.present? # Allow only logged-in users to book a slot
+  end
 
   def create?
     user&.has_role?(:admin) # Use safe navigation (`&.`) to avoid errors when `user` is nil
@@ -19,6 +22,6 @@ class SlotPolicy
   end
 
   def destroy?
-    user&.has_role?(:admin) || record.user == user
+    user&.has_role?(:admin)
   end
 end

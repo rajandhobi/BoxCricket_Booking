@@ -45,6 +45,6 @@ class Admin::SlotsController < ApplicationController
   end
 
   def slot_params
-    params.require(:slot).permit(:start_time, :end_time, :price, :availability)
+    params.require(:slot).permit(:start_time, :end_time, :price, :availability,:status)
   end
 end

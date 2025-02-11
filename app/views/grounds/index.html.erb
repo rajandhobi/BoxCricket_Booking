@@ -2,7 +2,7 @@
 
 <% content_for :title, "Grounds" %>
 
-<h1>Grounds</h1>
+<h1>Available Grounds</h1>
 
 <div id="grounds">
   <% @grounds.each do |ground| %>
@@ -14,5 +14,5 @@
 </div>
 
 <%= link_to "New ground", new_branch_ground_path(@branch) %>
-<%= link_to "Back to branches", branches_path %>
+<%= link_to "Back to cities", branches_path %>
 

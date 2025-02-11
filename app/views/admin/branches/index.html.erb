@@ -1,4 +1,4 @@
-<h1>Branches</h1>
+<h1>Cities</h1>
 <%= link_to 'New Branch', new_admin_branch_path, class: "btn btn-primary" %>
 <table>
   <tr>
@@ -7,7 +7,7 @@
   </tr>
   <% @branches.each do |branch| %>
     <tr>
-      <td><%= branch.name %></td>
+      <td><%= branch.city %></td>
       <td>
         <%= link_to 'Edit', edit_admin_branch_path(branch) %> |
         <%= link_to 'Delete', admin_branch_path(branch), method: :delete, data: { confirm: 'Are you sure?' } %>

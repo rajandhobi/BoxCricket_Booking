@@ -36,12 +36,14 @@ Rails.application.routes.draw do
 
   resources :branches do
     resources :grounds do
-      resources :slots, only: [:index, :show, :new, :create, :edit, :update, :destroy]
+      resources :slots, only: [:index, :show, :new, :create, :edit, :update, :destroy] do
+        resource :booking, only: [:create, :destroy]
+      end
     end
   end
   
 
-  resources :bookings
+  # resources :bookings
   
   root "branches#index"
 end

@@ -37,7 +37,12 @@
   </p>
 <% end %>
 
-<p>Role: <%= current_user&.roles&.first&.name || "Guest" %></p>
+  <% if user_signed_in? %>
+
+
+<p>Role: <%= current_user&.roles&.first&.name || "User" %></p>
+
+<% end %>
 
 
 <!-- <p class="notice"><%= notice %></p> -->

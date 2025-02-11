@@ -22,9 +22,10 @@
   </div>
 
   <div>
-    <%= form.label :city, style: "display: block" %>
-    <%= form.text_field :city %>
-  </div>
+  <%= form.label :city, style: "display: block" %>
+  <%= form.text_field :city, value: @branch.city, readonly: true %>
+</div>
+
 
   <div>
     <%= form.label :state, style: "display: block" %>

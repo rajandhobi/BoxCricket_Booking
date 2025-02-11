@@ -16,6 +16,8 @@ class GroundsController < ApplicationController
 
   # GET /grounds/1 or /grounds/1.json
   def show
+    authorize @ground
+
   end
 
   # GET /grounds/new
