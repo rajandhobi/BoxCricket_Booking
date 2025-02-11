@@ -43,24 +43,11 @@
   </div>
 
   <div>
-    <%= form.label :ground_type, style: "display: block" %>
-    <%= form.text_field :ground_type %>
-  </div>
-
-  <div>
     <%= form.label :capicity, style: "display: block" %>
     <%= form.number_field :capicity %>
   </div>
 
-  <div>
-    <%= form.label :price_per_hour, style: "display: block" %>
-    <%= form.text_field :price_per_hour %>
-  </div>
-
-  <div>
-    <%= form.label :availabiity, style: "display: block" %>
-    <%= form.checkbox :availabiity %>
-  </div>
+ 
 
   <div>
     <%= form.label :open_time, style: "display: block" %>
@@ -96,6 +83,12 @@
     <%= form.label :branch_id, style: "display: block" %>
     <%= form.text_field :branch_id %>
   </div>
+
+  <div >
+  <%= form.label :image, "Upload an image" %> : 
+  <%= form.file_field :image, class: "form-control "%>
+</div>
+
 
   <h3>Slots</h3>
   <div id="slots">

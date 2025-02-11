@@ -109,9 +109,9 @@ class GroundsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def ground_params
       params.require(:ground).permit(
-        :name, :location, :city, :state, :country, :pincode, :ground_type, 
-        :capicity, :price_per_hour, :availabiity, :open_time, :close_time, 
-        :facility, :contact_number, :email, :description, :branch_id,
+        :name, :location, :city, :state, :country, :pincode, 
+        :capicity, :open_time, :close_time, 
+        :facility, :contact_number, :email, :description, :branch_id,:image,
         slots_attributes: [:id, :start_time, :end_time, :price, :_destroy]
       )
     end

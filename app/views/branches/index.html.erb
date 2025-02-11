@@ -5,37 +5,42 @@
 <h1>Cities</h1> 
 
 <div id="branches">
-<h3> Total cities available : <%= @branches.count %> </h3>
+  <h3>Total cities available: <%= @branches.count %></h3>
 
-<ul>
-  <% @branches.each do |branch| %>
-    <li>
-    <%= link_to branch.city ,branch%> <br>
-      available grounds : <%= branch.grounds.count %>  <br>
-      <% if policy(branch).edit? %>
+  <%= search_form_for @q, url: branches_path, method: :get do |f| %>
+    <div class="field">
+      <%= f.label :city_cont, "Search by City" %>
+      <%= f.text_field :city_cont, class: "form-control" %>
+    </div>
 
-       <%= link_to "Edit", edit_branch_path(branch) %> 
-      <% end %>
-
-    <% if policy(branch).destroy? %>
-
-
-    <%= button_to "Delete", branch, method: :delete, data: { confirm: "Are you sure?" } %>
-     <% end %>
-
-
-
-    </li>
-      
-
+    <div class="actions mt-2">
+      <%= f.submit "Search", class: "btn btn-primary" %>
+      <%= link_to "Reset", branches_path, class: "btn btn-secondary ms-2" %>
+    </div>
   <% end %>
-</ul>
+
+  <% if @branches.any? %>
+    <ul>
+      <% @branches.each do |branch| %>
+        <li>
+          <%= link_to branch.city, branch %> <br>
+          Available grounds: <%= branch.grounds.count %> <br>
+
+          <% if policy(branch).edit? %>
+            <%= link_to "Edit", edit_branch_path(branch) %>
+          <% end %>
+
+          <% if policy(branch).destroy? %>
+            <%= button_to "Delete", branch, method: :delete, data: { confirm: "Are you sure?" } %>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p class="text-danger mt-3">Not found.</p>
+  <% end %>
 </div>
 
-<% if user_signed_in? %>
-<% if policy(Branch).new? %>
-
-<%= link_to "New branch", new_branch_path %>
-<% end %>
-
+<% if user_signed_in? && policy(Branch).new? %>
+  <%= link_to "New branch", new_branch_path %>
 <% end %>

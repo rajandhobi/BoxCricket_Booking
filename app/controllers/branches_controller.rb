@@ -7,6 +7,9 @@ class BranchesController < ApplicationController
   # GET /branches or /branches.json
   def index
     @branches = Branch.all
+
+    @q = Branch.ransack(params[:q]) # Initialize search object
+    @branches = @q.result(distinct: true) # Filter results
   end
 
   # GET /branches/1 or /branches/1.json

@@ -69,3 +69,9 @@ gem 'rolify'
 
 
 gem "pundit"
+
+gem "image_processing", ">= 1.2"
+gem 'mini_magick'
+
+
+gem "ransack", "~> 4.3"

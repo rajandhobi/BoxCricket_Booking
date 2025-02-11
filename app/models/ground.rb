@@ -7,5 +7,10 @@ class Ground < ApplicationRecord
   validates :name, :location, :ground_type, :price_per_hour, :contact_number, presence: true
   validates :price_per_hour, numericality: { greater_than_or_equal_to: 0 }
   validates :contact_number, length: { is: 10 }, numericality: { only_integer: true }
+
+
+  has_one_attached :image do |attachable|
+    attachable.variant :thumb,resize_to_limit: [300,300]
+  end
   
 end

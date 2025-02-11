@@ -1,4 +1,11 @@
 <div id="<%= dom_id ground %>">
+
+<% if @ground.image.attached? %>
+  <%= image_tag @ground.image %>
+<% else %>
+  <p>No image available</p>
+<% end %>
+
   <p>
     <strong>Name:</strong>
     <%= ground.name %>
@@ -29,25 +36,13 @@
     <%= ground.pincode %>
   </p>
 
-  <p>
-    <strong>Ground type:</strong>
-    <%= ground.ground_type %>
-  </p>
-
+  
   <p>
     <strong>Capicity:</strong>
     <%= ground.capicity %>
   </p>
 
-  <p>
-    <strong>Price per hourse:</strong>
-    <%= ground.price_per_hour %>
-  </p>
-
-  <p>
-    <strong>Availabiity:</strong>
-    <%= ground.availabiity %>
-  </p>
+  
 
   <p>
     <strong>Open time:</strong>

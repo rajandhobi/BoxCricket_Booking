@@ -2,6 +2,8 @@ require_relative "boot"
 
 require "rails/all"
 require 'rolify'
+require 'ransack'
+
 
 
 # Require the gems listed in Gemfile, including any gems
