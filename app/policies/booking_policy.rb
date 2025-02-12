@@ -8,6 +8,8 @@ class BookingPolicy < ApplicationPolicy
   
 
   def destroy?
-    user.present? && record.user == user
+    # user.present? && record.user == user
+    user.present? && (record.user == user || user.has_role?(:admin) || user.has_role?(:super_admin))
+
   end
 end

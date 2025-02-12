@@ -3,6 +3,7 @@
 <p>Time: <%= @booking.slot.start_time.strftime("%I:%M %p") %> - <%= @booking.slot.end_time.strftime("%I:%M %p") %></p>
 <p>Price: ₹<%= @booking.slot.price %></p>
 <%= button_to "Cancel Booking", branch_ground_slot_booking_path(@branch, @ground, slot.booking), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %>
+<!-- <%= button_to "Book Now", branch_ground_slot_booking_path(@branch, @ground, slot), method: :post, class: "btn btn-primary" %> -->
 
 
 <% if current_user.has_role?(:admin) %>

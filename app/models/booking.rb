@@ -17,17 +17,7 @@ class Booking < ApplicationRecord
     slot.update(status: "booked") if status == "booked"
   end
 
-  # def update_slot_status_on_cancellation
-  #   if saved_change_to_status? && status == "booked"
-  #     slot.update(status: "available")
-  #   end
-  # end
-
-   # When a booking is deleted (canceled), reset slot to available
-  #  def reset_slot_status
-  #   slot.update!(status: "available") if slot.present?
-  # end
-  
+ 
 
   def reset_slot_status
     if slot.present?

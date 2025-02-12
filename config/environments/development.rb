@@ -15,7 +15,8 @@ Rails.application.configure do
   # Enable server timing.
   config.server_timing = true
 
-
+# config/environments/development.rb
+  config.sass.inline_source_maps = true
   # Store files locally.
   config.active_storage.service = :local
 

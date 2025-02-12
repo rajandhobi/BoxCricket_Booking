@@ -75,3 +75,7 @@ gem 'mini_magick'
 
 
 gem "ransack", "~> 4.3"
+
+
+gem 'bootstrap', '~> 5.3.3'
+gem 'sassc-rails'

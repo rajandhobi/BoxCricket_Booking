@@ -6,7 +6,7 @@ class BookingsController < ApplicationController
     def show
         @slot = Slot.find(params[:id])
         @booking = @slot.booking # Ensure booking is loaded
-      end
+    end
       
   
     def create
@@ -54,18 +54,7 @@ class BookingsController < ApplicationController
       end
     end
     
-    # def destroy
-    #   slot = Slot.find(params[:slot_id])  # ✅ Find the slot
-    #   booking = slot.booking              # ✅ Get the associated booking
-    #   puts slot
-    #   if booking && booking.destroy
-    #     slot.update(status: "available")  # ✅ Ensure slot is marked as available
-    #     # slot.reload                       # ✅ Reload slot to update associations
-    #     redirect_to root_path, notice: "Booking deleted successfully."
-    #   else
-    #     redirect_to root_path, alert: "Booking not found."
-    #   end
-    # end
+
     
     
       

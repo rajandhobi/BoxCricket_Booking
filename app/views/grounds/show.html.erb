@@ -2,8 +2,8 @@
 
 <%= render @ground %>
 
-<% if current_user.has_role?(:admin) || current_user.has_role?(:super_admin) ||current_user.has_role?(:user) %>
-  <h3>Slots</h3>
+<% if current_user.has_role?(:admin) || current_user.has_role?(:super_admin) %>
+  <h3>Slots  :</h3>
   <%= link_to "Add Slot", new_branch_ground_slot_path(@branch, @ground), class: "btn btn-primary" %>
 
   <table>
@@ -53,6 +53,8 @@
 
         <!-- Show Cancel Booking Button if current_user booked this slot -->
         <% if slot.booking && slot.booking.user == current_user %>
+
+
           <%= button_to "Cancel Booking", branch_ground_slot_booking_path(@branch, @ground, slot), 
               method: :delete, 
               data: { confirm: "Are you sure you want to cancel this booking?" }, 
@@ -71,3 +73,4 @@
   
   <%= link_to "Back to grounds", branch_path(@branch), class: "btn btn-secondary" %>
 </div>
+
