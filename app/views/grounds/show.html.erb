@@ -2,7 +2,7 @@
 
 <%= render @ground %>
 
-<% if current_user.has_role?(:admin) || current_user.has_role?(:super_admin) %>
+<% if current_user.has_role?(:admin) || current_user.has_role?(:super_admin) ||current_user.has_role?(:user) %>
   <h3>Slots</h3>
   <%= link_to "Add Slot", new_branch_ground_slot_path(@branch, @ground), class: "btn btn-primary" %>
 

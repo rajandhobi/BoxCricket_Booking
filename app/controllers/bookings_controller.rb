@@ -18,6 +18,7 @@ class BookingsController < ApplicationController
       authorize @slot, :book?
   
       if @slot.status == "available"
+        puts "in slot"
         @booking = @slot.create_booking(user: current_user, status: "booked")
   
         if @booking.persisted?
@@ -31,28 +32,43 @@ class BookingsController < ApplicationController
     end
   
     def destroy
-        @booking = Booking.find_by(id: params[:id])
-        
-        if @booking.nil?
-          redirect_to root_path, alert: "Booking not found" and return
-        end
-      
-        @ground = @booking.slot.ground
-        @branch = @ground.branch
-      
-        authorize @booking  # Ensure the user has permission to cancel
-      
-        if @booking.destroy
-          @slot.update(status: "available")  # Reset slot status
-
-          puts "Booking successfully deleted!"  # Debugging log
-          redirect_to branch_ground_slots_path(@branch, @ground), notice: "Booking canceled successfully."
+      booking = Booking.find_by(params[:id])  # ✅ Find booking
+      if booking
+        slot = booking.slot  # ✅ Get associated slot
+        if booking.destroy
+          puts "Booking deleted successfully."
+          puts slot
+          if slot.update(status: "available")
+            puts "Slot status updated to available."
+          else
+            puts "Failed to update slot status."
+          end
+          redirect_to root_path, notice: "Booking deleted successfully."
         else
-          puts "Failed to delete booking!"  # Debugging log
-          redirect_to branch_ground_slots_path(@branch, @ground), alert: "Failed to cancel booking."
+          puts "Booking deletion failed."
+          redirect_to root_path, alert: "Failed to delete booking."
         end
+      else
+        puts "Booking not found."
+        redirect_to root_path, alert: "Booking not found."
       end
-
+    end
+    
+    # def destroy
+    #   slot = Slot.find(params[:slot_id])  # ✅ Find the slot
+    #   booking = slot.booking              # ✅ Get the associated booking
+    #   puts slot
+    #   if booking && booking.destroy
+    #     slot.update(status: "available")  # ✅ Ensure slot is marked as available
+    #     # slot.reload                       # ✅ Reload slot to update associations
+    #     redirect_to root_path, notice: "Booking deleted successfully."
+    #   else
+    #     redirect_to root_path, alert: "Booking not found."
+    #   end
+    # end
+    
+    
+      
   private
 
   
