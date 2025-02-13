@@ -1,6 +1,6 @@
 <div id="<%= dom_id ground %>">
 
-<% if @ground.image.attached? %>
+<% if ground.present? && ground.image.attached? %>
   <%= image_tag @ground.image %>
 <% else %>
   <p>No image available</p>

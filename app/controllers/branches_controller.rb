@@ -30,7 +30,7 @@ class BranchesController < ApplicationController
 
   # POST /branches or /branches.json
   def create
-    @branch = Branch.new(branch_params)
+    @branch = current_user.branches.new(branch_params) # Assign current admin as owner
     authorize @branch
 
 
@@ -84,6 +84,6 @@ class BranchesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def branch_params
-      params.require(:branch).permit(:city)
+      params.require(:branch).permit(:city,:user_id)
     end
 end

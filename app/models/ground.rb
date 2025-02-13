@@ -4,8 +4,7 @@ class Ground < ApplicationRecord
   accepts_nested_attributes_for :slots, allow_destroy: true
 
 
-  validates :name, :location, :ground_type, :price_per_hour, :contact_number, presence: true
-  validates :price_per_hour, numericality: { greater_than_or_equal_to: 0 }
+  validates :name, :location,:contact_number, presence: true
   validates :contact_number, length: { is: 10 }, numericality: { only_integer: true }
 
 

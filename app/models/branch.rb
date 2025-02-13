@@ -1,5 +1,5 @@
 class Branch < ApplicationRecord
-    # belongs_to :user
+    belongs_to :user , optional: true 
     #
 
     has_many :grounds, dependent: :destroy # A branch has multiple grounds

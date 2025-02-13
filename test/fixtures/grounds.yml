@@ -7,7 +7,6 @@ one:
   state: MyString
   country: MyString
   pincode: MyString
-  ground_type: MyString
   capicity: 1
   price_per_hourse: 9.99
   availabiity: false

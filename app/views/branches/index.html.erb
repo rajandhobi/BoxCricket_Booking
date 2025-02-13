@@ -42,5 +42,8 @@
 </div>
 
 <% if user_signed_in? && policy(Branch).new? %>
+  <% if current_user.has_role?(:superadmin) %>
+
   <%= link_to "New branch", new_branch_path %>
+  <% end %>
 <% end %>

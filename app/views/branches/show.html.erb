@@ -21,10 +21,18 @@
 <% end %>
 
 <div>
-  <% if current_user.has_role?(:admin) || current_user.has_role?(:super_admin) %>
-    <%= link_to "Edit this city", edit_branch_path(@branch) %> <br>
-    <%= button_to "Destroy this city", @branch, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %>
-  <% end %>
+<% if user_signed_in? && policy(@branch).edit? %>
+<% if current_user.has_role?(:superadmin) %>
+  <%= link_to "Edit", edit_branch_path(@branch), class: "btn btn-warning" %>
+<% end %>
+<% end %>
+
+<% if user_signed_in? && policy(@branch).destroy? %>
+<% if current_user.has_role?(:superadmin) %>
+  <%= button_to "Delete", @branch, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %>
+<% end %>
+<% end %>
+
   
   <%= link_to "Back to cities", branches_path %>
 </div>

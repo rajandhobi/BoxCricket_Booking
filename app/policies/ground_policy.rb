@@ -22,14 +22,14 @@ class GroundPolicy
   end
 
   def create?
-    user&.has_role?(:admin) # Use safe navigation (`&.`) to avoid errors when `user` is nil
+    user&.has_role?(:admin) || user&.has_role?(:superadmin) # Use safe navigation (`&.`) to avoid errors when `user` is nil
   end
 
   def update?
-    user&.has_role?(:admin) # Use safe navigation (`&.`) to avoid errors when `user` is nil
+    user&.has_role?(:admin) || user&.has_role?(:superadmin) # Use safe navigation (`&.`) to avoid errors when `user` is nil
   end
 
   def destroy?
-    user&.has_role?(:admin) # Use safe navigation (`&.`) to avoid errors when `user` is nil
+    user&.has_role?(:admin) || user&.has_role?(:superadmin) # Use safe navigation (`&.`) to avoid errors when `user` is nil
   end
 end

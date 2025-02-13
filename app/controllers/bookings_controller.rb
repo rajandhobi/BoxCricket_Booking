@@ -1,11 +1,13 @@
 class BookingsController < ApplicationController
     before_action :authenticate_user!
-    before_action :authorize_admin, only: [:show] # Only admins can see booking details
+    before_action :authorize_admin_or_owner, only: [:show]
 
 
     def show
-        @slot = Slot.find(params[:id])
-        @booking = @slot.booking # Ensure booking is loaded
+      @slot = Slot.find(params[:id])
+      @booking = @slot.booking # Ensure booking is loaded
+      @user = @booking.user if @booking.present? # Fetch the user who booked the slot
+
     end
       
   
@@ -53,19 +55,16 @@ class BookingsController < ApplicationController
         redirect_to root_path, alert: "Booking not found."
       end
     end
-    
-
-    
-    
       
   private
 
   
-  def authorize_admin
-    unless current_user.has_role?(:admin)  # Checks if user is an admin
+  def authorize_admin_or_owner
+    unless current_user.has_role?(:admin) || @booking&.user == current_user
       redirect_to root_path, alert: "Access denied! You are not authorized to view this page."
     end
   end
+  
       
     
 end      

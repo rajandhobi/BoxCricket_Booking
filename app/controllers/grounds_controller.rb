@@ -16,6 +16,7 @@ class GroundsController < ApplicationController
 
   # GET /grounds/1 or /grounds/1.json
   def show
+    
     authorize @ground
 
   end
@@ -34,16 +35,7 @@ class GroundsController < ApplicationController
     @ground = @branch.grounds.find(params[:id])
   end
 
-  # POST /grounds or /grounds.json
-
-  # def create
-  #   @ground = Ground.new(ground_params)
-  #   if @ground.save
-  #     redirect_to @ground, notice: "Ground was successfully created."
-  #   else
-  #     render :new
-  #   end
-  # end
+  
 
   def create
     @ground = @branch.grounds.new(ground_params)

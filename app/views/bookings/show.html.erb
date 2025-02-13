@@ -6,7 +6,7 @@
 <!-- <%= button_to "Book Now", branch_ground_slot_booking_path(@branch, @ground, slot), method: :post, class: "btn btn-primary" %> -->
 
 
-<% if current_user.has_role?(:admin) %>
+<% if current_user.has_role?(:admin) || @user %>
   <h1>Booking Details</h1>
 
   <p><strong>User:</strong> <%= @booking.user.email %></p>

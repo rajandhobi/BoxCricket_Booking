@@ -1,24 +1,5 @@
 Rails.application.routes.draw do
-  # namespace :admin do
-  #   get "slots/index"
-  #   get "slots/new"
-  #   get "slots/create"
-  #   get "slots/edit"
-  #   get "slots/update"
-  #   get "slots/destroy"
-  #   get "grounds/index"
-  #   get "grounds/new"
-  #   get "grounds/create"
-  #   get "grounds/edit"
-  #   get "grounds/update"
-  #   get "grounds/destroy"
-  #   get "branches/index"
-  #   get "branches/new"
-  #   get "branches/create"
-  #   get "branches/edit"
-  #   get "branches/update"
-  #   get "branches/destroy"
-  # end
+  root "branches#index"
 
   # namespace :admin do
   #   resources :branches do
@@ -37,7 +18,7 @@ Rails.application.routes.draw do
   resources :branches do
     resources :grounds do
       resources :slots, only: [:index, :show, :new, :create, :edit, :update, :destroy] do
-        resource :booking, only: [:create, :destroy]
+        resource :booking, only: [:show, :create, :destroy]
       end
     end
   end
@@ -46,5 +27,5 @@ Rails.application.routes.draw do
 
   # resources :bookings
   
-  root "branches#index"
+  # root "branches#index"
 end

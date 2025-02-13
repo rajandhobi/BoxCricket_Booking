@@ -1,17 +1,46 @@
-<h1>Cities</h1>
-<%= link_to 'New Branch', new_admin_branch_path, class: "btn btn-primary" %>
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Actions</th>
-  </tr>
-  <% @branches.each do |branch| %>
-    <tr>
-      <td><%= branch.city %></td>
-      <td>
-        <%= link_to 'Edit', edit_admin_branch_path(branch) %> |
-        <%= link_to 'Delete', admin_branch_path(branch), method: :delete, data: { confirm: 'Are you sure?' } %>
-      </td>
-    </tr>
+<p style="color: green"><%= notice %></p>
+
+<% content_for :title, "Branches" %> 
+
+<h1>Cities</h1> 
+
+<div id="branches">
+  <h3>Total cities available: <%= @branches.count %></h3>
+
+  <%= search_form_for @q, url: branches_path, method: :get do |f| %>
+    <div class="field">
+      <%= f.label :city_cont, "Search by City" %>
+      <%= f.text_field :city_cont, class: "form-control" %>
+    </div>
+
+    <div class="actions mt-2">
+      <%= f.submit "Search", class: "btn btn-primary" %>
+      <%= link_to "Reset", branches_path, class: "btn btn-secondary ms-2" %>
+    </div>
   <% end %>
-</table>
+
+  <% if @branches.any? %>
+    <ul>
+      <% @branches.each do |branch| %>
+        <li>
+          <%= link_to branch.city, branch %> <br>
+          Available grounds: <%= branch.grounds.count %> <br>
+
+          <% if policy(branch).edit? %>
+            <%= link_to "Edit", edit_branch_path(branch) %>
+          <% end %>
+
+          <% if policy(branch).destroy? %>
+            <%= button_to "Delete", branch, method: :delete, data: { confirm: "Are you sure?" } %>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p class="text-danger mt-3">Not found.</p>
+  <% end %>
+</div>
+
+<% if user_signed_in? && policy(Branch).new? %>
+  <%= link_to "New branch", new_branch_path %>
+<% end %>
