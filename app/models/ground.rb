@@ -1,5 +1,7 @@
 class Ground < ApplicationRecord
   belongs_to :branch
+  belongs_to :user  # Each ground is created by one user (admin)
+
   has_many :slots, dependent: :destroy
   accepts_nested_attributes_for :slots, allow_destroy: true
 

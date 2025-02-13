@@ -11,6 +11,8 @@ class User < ApplicationRecord
   has_many :branches, dependent: :destroy
   has_many :bookings, dependent: :destroy
   has_many :payments, through: :bookings
+  has_many :grounds, dependent: :destroy  # A user (admin) can create multiple grounds
+
 
 
   def superadmin?

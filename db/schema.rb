@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_11_110505) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_13_084945) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -74,7 +74,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_11_110505) do
     t.integer "branch_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "user_id"
     t.index ["branch_id"], name: "index_grounds_on_branch_id"
+    t.index ["user_id"], name: "index_grounds_on_user_id"
   end
 
   create_table "payments", force: :cascade do |t|
@@ -135,6 +137,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_11_110505) do
   add_foreign_key "bookings", "users"
   add_foreign_key "branches", "users"
   add_foreign_key "grounds", "branches"
+  add_foreign_key "grounds", "users"
   add_foreign_key "payments", "bookings"
   add_foreign_key "slots", "grounds"
 end

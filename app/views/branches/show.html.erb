@@ -8,8 +8,14 @@
   <ul>
     <% @grounds.each do |ground| %>
       <li>
+      <% if policy(ground).show? %>
+
         <%= link_to ground.name, branch_ground_path(@branch, ground) %>  [ <%= ground.location %> ]
-      </li>
+
+      <% else %>
+      <h5> already created by some one</h5>
+      <% end %>
+        </li>
     <% end %>
   </ul>
 <% else %>

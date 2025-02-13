@@ -10,7 +10,12 @@ class GroundsController < ApplicationController
   # GET /grounds or /grounds.json
   def index
     @branch = Branch.find(params[:branch_id])
-    @grounds = @branch.grounds
+  
+    if current_user.has_role?(:superadmin)
+      @grounds = @branch.grounds  # Superadmin sees all grounds
+    else
+      @grounds = @branch.grounds.where(user: current_user)  # Admins only see their own grounds
+    end
   end
   
 
@@ -39,7 +44,7 @@ class GroundsController < ApplicationController
 
   def create
     @ground = @branch.grounds.new(ground_params)
-    authorize @ground
+    @ground.user = current_user  # Assign ground to the currently logged-in user    authorize @ground
 
 
     respond_to do |format|
@@ -89,9 +94,20 @@ class GroundsController < ApplicationController
       redirect_to branches_path, alert: "Branch not found" if @branch.nil?
     end
 
+    # def set_ground
+    #   @ground = @branch.grounds.find(params[:id]) if @branch
+    # end
     def set_ground
-      @ground = @branch.grounds.find(params[:id]) if @branch
+      @ground = @branch.grounds.find(params[:id])
+    
+      # Ensure only superadmins or the ground's owner can access it
+      if current_user.has_role?(:superadmin) || @ground.user == current_user
+        @ground
+      else
+        redirect_to branch_grounds_path(@branch), alert: "You are not authorized to access this ground."
+      end
     end
+    
 
     def authorize_ground
       authorize @ground
