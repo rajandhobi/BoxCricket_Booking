@@ -1,42 +1,48 @@
-<h2>Slots</h2>
-<%= link_to "Add Slot", new_branch_ground_slot_path(@branch, @ground), class: "btn btn-primary" %>
+<div class="card shadow-sm p-3">
+  <h2 class="text-primary">Slots</h2>
 
-<table>
-  <thead>
-    <tr>
-      <th>Start Time</th>
-      <th>End Time</th>
-      <th>Price</th>
-      <th>Status</th>
+  <div class="mb-3">
+    <%= link_to "Add Slot", new_branch_ground_slot_path(@branch, @ground), class: "btn btn-primary btn-sm" %>
+  </div>
 
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @slots.each do |slot| %>
-      <tr>
-        <td><%= slot.start_time.strftime("%I:%M %p") %></td>
-        <td><%= slot.end_time.strftime("%I:%M %p") %></td>
-        <td><%= slot.price %></td>
-        <td><%= slot.status.capitalize %></td>
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover">
+      <thead class="table-dark text-center">
+        <tr>
+          <th>Start Time</th>
+          <th>End Time</th>
+          <th>Price</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @slots.each do |slot| %>
+          <tr>
+            <td><%= slot.start_time.strftime("%I:%M %p") %></td>
+            <td><%= slot.end_time.strftime("%I:%M %p") %></td>
+            <td>₹<%= slot.price %></td>
+            <td>
+              <span class="badge <%= slot.status == 'available' ? 'bg-success' : 'bg-danger' %>">
+                <%= slot.status.capitalize %>
+              </span>
+            </td>
+            <td class="text-center">
+            <div class="d-flex justify-content-center gap-2">
+              <%= link_to "Edit", edit_branch_ground_slot_path(@branch, @ground, slot), class: "btn btn-warning btn-sm" %>  
+              <%= button_to "Delete", branch_ground_slot_path(@branch, @ground, slot), 
+                   method: :delete, 
+                   data: { confirm: "Are you sure?" }, 
+                   class: "btn btn-danger btn-sm" %>
+            </div>
+          </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 
-        <td>
-
-<%= link_to "Edit", edit_branch_ground_slot_path(@branch, @ground, slot) %>|
-<%= button_to "Delete", branch_ground_slot_path(@branch, @ground, slot), 
-             method: :delete, 
-             data: { confirm: "Are you sure?" }, 
-             class: "btn btn-danger" %>
-        </td>
-
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-
-
-
-
-
-<%= link_to "Back to Ground", branch_ground_path(@branch, @ground), class: "btn btn-secondary mt-3" %>
+  <div class="mt-3">
+    <%= link_to "Back to Ground", branch_ground_path(@branch, @ground), class: "btn btn-secondary btn-sm" %>
+  </div>
+</div>

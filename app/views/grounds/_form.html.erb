@@ -1,8 +1,8 @@
-<%= form_with model: [@branch, @ground] do |form| %>
+<%= form_with model: [@branch, @ground], class: "container mt-4 p-4 bg-light rounded shadow" do |form| %>
+  
   <% if ground.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(ground.errors.count, "error") %> prohibited this ground from being saved:</h2>
-
+    <div class="alert alert-danger">
+      <h4><%= pluralize(ground.errors.count, "error") %> prohibited this ground from being saved:</h4>
       <ul>
         <% ground.errors.each do |error| %>
           <li><%= error.full_message %></li>
@@ -11,108 +11,111 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :name, style: "display: block" %>
-    <%= form.text_field :name %>
+  <div class="row g-3">
+    <div class="col-md-6">
+      <%= form.label :name, class: "form-label" %>
+      <%= form.text_field :name, class: "form-control" %>
+    </div>
+
+    <div class="col-md-6">
+      <%= form.label :location, class: "form-label" %>
+      <%= form.text_field :location, class: "form-control" %>
+    </div>
+
+    <div class="col-md-6">
+      <%= form.label :city, class: "form-label" %>
+      <%= form.text_field :city, value: @branch.city, readonly: true, class: "form-control" %>
+    </div>
+
+    <div class="col-md-6">
+      <%= form.label :state, class: "form-label" %>
+      <%= form.text_field :state, class: "form-control" %>
+    </div>
+
+    <div class="col-md-6">
+      <%= form.label :country, class: "form-label" %>
+      <%= form.text_field :country, class: "form-control" %>
+    </div>
+
+    <div class="col-md-6">
+      <%= form.label :pincode, class: "form-label" %>
+      <%= form.text_field :pincode, class: "form-control" %>
+    </div>
+
+    <div class="col-md-6">
+      <%= form.label :capicity, class: "form-label" %>
+      <%= form.number_field :capicity, class: "form-control" %>
+    </div>
+
+    <div class="col-md-6">
+      <%= form.label :contact_number, class: "form-label" %>
+      <%= form.text_field :contact_number, class: "form-control" %>
+    </div>
+
+    <div class="col-md-6">
+      <%= form.label :email, class: "form-label" %>
+      <%= form.text_field :email, class: "form-control" %>
+    </div>
+
+    <div class="col-md-6">
+      <%= form.label :branch_id, class: "form-label" %>
+      <%= form.text_field :branch_id, class: "form-control" %>
+    </div>
+
+    <div class="col-md-6">
+      <%= form.label :open_time, class: "form-label" %>
+      <%= form.time_field :open_time, class: "form-control" %>
+    </div>
+
+    <div class="col-md-6">
+      <%= form.label :close_time, class: "form-label" %>
+      <%= form.time_field :close_time, class: "form-control" %>
+    </div>
+
+    <div class="col-md-12">
+      <%= form.label :facility, class: "form-label" %>
+      <%= form.text_area :facility, class: "form-control", rows: 3 %>
+    </div>
+
+    <div class="col-md-12">
+      <%= form.label :description, class: "form-label" %>
+      <%= form.text_area :description, class: "form-control", rows: 3 %>
+    </div>
+
+    <div class="col-md-12">
+      <%= form.label :image, "Upload an Image", class: "form-label" %>
+      <%= form.file_field :image, class: "form-control" %>
+    </div>
   </div>
 
-  <div>
-    <%= form.label :location, style: "display: block" %>
-    <%= form.text_field :location %>
-  </div>
-
-  <div>
-  <%= form.label :city, style: "display: block" %>
-  <%= form.text_field :city, value: @branch.city, readonly: true %>
-</div>
-
-
-  <div>
-    <%= form.label :state, style: "display: block" %>
-    <%= form.text_field :state %>
-  </div>
-
-  <div>
-    <%= form.label :country, style: "display: block" %>
-    <%= form.text_field :country %>
-  </div>
-
-  <div>
-    <%= form.label :pincode, style: "display: block" %>
-    <%= form.text_field :pincode %>
-  </div>
-
-  <div>
-    <%= form.label :capicity, style: "display: block" %>
-    <%= form.number_field :capicity %>
-  </div>
-
- 
-
-  <div>
-    <%= form.label :open_time, style: "display: block" %>
-    <%= form.time_field :open_time %>
-  </div>
-
-  <div>
-    <%= form.label :close_time, style: "display: block" %>
-    <%= form.time_field :close_time %>
-  </div>
-
-  <div>
-    <%= form.label :facility, style: "display: block" %>
-    <%= form.textarea :facility %>
-  </div>
-
-  <div>
-    <%= form.label :contact_number, style: "display: block" %>
-    <%= form.text_field :contact_number %>
-  </div>
-
-  <div>
-    <%= form.label :email, style: "display: block" %>
-    <%= form.text_field :email %>
-  </div>
-
-  <div>
-    <%= form.label :description, style: "display: block" %>
-    <%= form.textarea :description %>
-  </div>
-
-  <div>
-    <%= form.label :branch_id, style: "display: block" %>
-    <%= form.text_field :branch_id %>
-  </div>
-
-  <div >
-  <%= form.label :image, "Upload an image" %> : 
-  <%= form.file_field :image, class: "form-control "%>
-</div>
-
-
-  <h3>Slots</h3>
+  <h3 class="mt-4">Slots</h3>
   <div id="slots">
     <%= form.fields_for :slots do |slot_form| %>
-      <div>
-        <%= slot_form.label :start_time, "Start Time" %>
-        <%= slot_form.time_field :start_time %>
+      <div class="row g-3 align-items-center border p-3 rounded mb-2">
+        <div class="col-md-4">
+          <%= slot_form.label :start_time, "Start Time", class: "form-label" %>
+          <%= slot_form.time_field :start_time, class: "form-control" %>
+        </div>
 
-        <%= slot_form.label :end_time, "End Time" %>
-        <%= slot_form.time_field :end_time %>
+        <div class="col-md-4">
+          <%= slot_form.label :end_time, "End Time", class: "form-label" %>
+          <%= slot_form.time_field :end_time, class: "form-control" %>
+        </div>
 
-        <%= slot_form.label :price, "Price" %>
-        <%= slot_form.number_field :price %>
+        <div class="col-md-3">
+          <%= slot_form.label :price, "Price", class: "form-label" %>
+          <%= slot_form.number_field :price, class: "form-control" %>
+        </div>
 
-        <%= slot_form.hidden_field :_destroy %>
-        <%= link_to "Remove Slot", "#", class: "remove-slot" %>
+        <div class="col-md-1 text-end">
+          <%= slot_form.hidden_field :_destroy %>
+          <%= link_to "❌", "#", class: "btn btn-white btn-sm remove-slot" %>
+        </div>
       </div>
     <% end %>
   </div>
 
-
-  <div>
-    <%= form.submit %>
+  <div class="text-center mt-4">
+    <%= form.submit "Save Ground", class: "btn btn-primary px-4" %>
   </div>
 <% end %>
-
-

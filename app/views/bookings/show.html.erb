@@ -4,7 +4,13 @@
 <p>Price: ₹<%= @booking.slot.price %></p>
 <%= button_to "Cancel Booking", branch_ground_slot_booking_path(@branch, @ground, slot.booking), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %>
 <!-- <%= button_to "Book Now", branch_ground_slot_booking_path(@branch, @ground, slot), method: :post, class: "btn btn-primary" %> -->
+<!-- Payment Button -->
+<%= button_to "Proceed to Payment", new_payment_path(booking_id: @booking.id), 
+    class: "btn btn-success" %>
 
+<!-- Back Button -->
+<%= link_to "Back", request.referer || branch_ground_path(@slot.ground.branch, @slot.ground), 
+    class: "btn btn-secondary" %>
 
 <% if current_user.has_role?(:admin) || @user %>
   <h1>Booking Details</h1>

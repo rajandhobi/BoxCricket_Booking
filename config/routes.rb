@@ -19,9 +19,12 @@ Rails.application.routes.draw do
     resources :grounds do
       resources :slots, only: [:index, :show, :new, :create, :edit, :update, :destroy] do
         resource :booking, only: [:show, :create, :destroy]
+        get 'bookings', to: 'bookings#index', on: :collection  # Custom index route
+
       end
     end
   end
+  # resources :bookings ,only: [:index]
   
   
 

@@ -1,82 +1,40 @@
-<div id="<%= dom_id ground %>">
+<div id="<%= dom_id ground %>" class="card shadow-lg p-4 mb-4 bg-white rounded">
+  <% if ground.present? && ground.image.attached? %>
+    <div class="text-center">
+      <%= image_tag ground.image, class: "img-fluid rounded mb-3",style: "width: 500px; height: 300px; object-fit: cover;" %>
+    </div>
+    
+  <% else %>
+    <p class="text-muted text-center">No image available</p>
+  <% end %>
+      <p class="text-muted"><strong>Description:</strong> <%= ground.description %></p>
 
-<% if ground.present? && ground.image.attached? %>
-  <%= image_tag @ground.image %>
-<% else %>
-  <p>No image available</p>
-<% end %>
 
-  <p>
-    <strong>Name:</strong>
-    <%= ground.name %>
-  </p>
+  <div class="card-body">
+    <h3 class="card-title text-primary"><%= ground.name %></h3>
+    
+    <div class="row">
+      <div class="col-md-6">
+        <p><strong>Location:</strong> <%= ground.location %></p>
+        <p><strong>City:</strong> <%= ground.city %></p>
+        <p><strong>State:</strong> <%= ground.state %></p>
+        <p><strong>Country:</strong> <%= ground.country %></p>
+        <p><strong>Pincode:</strong> <%= ground.pincode %></p>
+      </div>
+      <div class="col-md-6">
+        <p><strong>Capacity:</strong> <%= ground.capicity %></p>
+        <p><strong>Open Time:</strong> <%= ground.open_time.strftime("%I:%M %p") %></p>
+        <p><strong>Close Time:</strong> <%= ground.close_time.strftime("%I:%M %p") %></p>
+        <p><strong>Facility:</strong> <%= ground.facility %></p>
+      </div>
+    </div>
 
-  <p>
-    <strong>Location:</strong>
-    <%= ground.location %>
-  </p>
+    <hr>
 
-  <p>
-    <strong>City:</strong>
-    <%= ground.city %>
-  </p>
+    <p><strong>Contact Number:</strong> <%= ground.contact_number %></p>
+    <p><strong>Email:</strong> <%= ground.email %></p>
 
-  <p>
-    <strong>State:</strong>
-    <%= ground.state %>
-  </p>
 
-  <p>
-    <strong>Country:</strong>
-    <%= ground.country %>
-  </p>
-
-  <p>
-    <strong>Pincode:</strong>
-    <%= ground.pincode %>
-  </p>
-
-  
-  <p>
-    <strong>Capicity:</strong>
-    <%= ground.capicity %>
-  </p>
-
-  
-
-  <p>
-    <strong>Open time:</strong>
-    <%= ground.open_time %>
-  </p>
-
-  <p>
-    <strong>Close time:</strong>
-    <%= ground.close_time %>
-  </p>
-
-  <p>
-    <strong>Facility:</strong>
-    <%= ground.facility %>
-  </p>
-
-  <p>
-    <strong>Contact number:</strong>
-    <%= ground.contact_number %>
-  </p>
-
-  <p>
-    <strong>Email:</strong>
-    <%= ground.email %>
-  </p>
-
-  <p>
-    <strong>Description:</strong>
-    <%= ground.description %>
-  </p>
-
-  <p>
-    <strong>Branch:</strong>
-    <%= ground.branch_id %>
-  </p>
-
+    <p><strong>Branch:</strong> <span class="badge bg-secondary"><%= ground.city %></span></p>
+  </div>
 </div>

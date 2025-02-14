@@ -5,9 +5,6 @@ class BookingPolicy < ApplicationPolicy
   def book?
     user.present?
   end
-   def show?
-   end
-  
 
   def destroy?
     # user.present? && record.user == user

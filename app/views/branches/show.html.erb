@@ -5,40 +5,64 @@
 <h2>Grounds in <%= @branch.city %></h2>
 
 <% if @grounds.any? %>
-  <ul>
+  <div class="row">
     <% @grounds.each do |ground| %>
-      <li>
       <% if policy(ground).show? %>
+        <div class="col-md-4 p-3">
+          <div class="card ground-card shadow p-3 mb-4 rounded">
+            
+            <% if ground.image.attached? %>
+              <%= image_tag ground.image.variant(resize_to_fill: [300, 200]), class: "card-img-top rounded", alt: "Ground Image" %>
+            <% else %>
+              <%= image_tag "placeholder.jpg", class: "card-img-top rounded", alt: "No Image Available" %>
+            <% end %>
 
-        <%= link_to ground.name, branch_ground_path(@branch, ground) %>  [ <%= ground.location %> ]
+            <div class="card-body">
+              <h5 class="card-title">
+                <%= link_to ground.name, branch_ground_path(@branch, ground), class: "text-decoration-none" %>
+              </h5>
+              <p class="card-text">Location: <%= ground.location %></p>
+            </div>
 
-      <% else %>
-      <h5> already created by some one</h5>
+          </div>
+        </div>
       <% end %>
-        </li>
     <% end %>
-  </ul>
+  </div>
 <% else %>
   <p>No grounds available for this branch.</p>
 <% end %>
 
-<% if current_user.has_role?(:admin) || current_user.has_role?(:super_admin) %>
-  <%= link_to "Add a New Ground", new_branch_ground_path(@branch), class: "btn btn-primary" %>
+<% if user_signed_in? && (current_user.has_role?(:admin) || current_user.has_role?(:superadmin)) %>
+  <%= link_to "Add a New Ground", new_branch_ground_path(@branch), class: "btn btn-primary mb-3" %>
 <% end %>
 
-<div>
-<% if user_signed_in? && policy(@branch).edit? %>
-<% if current_user.has_role?(:superadmin) %>
-  <%= link_to "Edit", edit_branch_path(@branch), class: "btn btn-warning" %>
-<% end %>
-<% end %>
+<div class="d-flex justify-content-start gap-2 mt-3 mb-4">
+  <% if user_signed_in? && policy(@branch).edit? && current_user.has_role?(:superadmin) %>
+    <%= link_to "Edit", edit_branch_path(@branch), class: "btn btn-warning px-4" %>
+  <% end %>
 
-<% if user_signed_in? && policy(@branch).destroy? %>
-<% if current_user.has_role?(:superadmin) %>
-  <%= button_to "Delete", @branch, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %>
-<% end %>
-<% end %>
+  <% if user_signed_in? && policy(@branch).destroy? && current_user.has_role?(:superadmin) %>
+    <%= button_to "Delete", @branch, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger px-4" %>
+  <% end %>
 
-  
-  <%= link_to "Back to cities", branches_path %>
+  <%= link_to "Back to Cities", branches_path, class: "btn btn-secondary px-4" %>
 </div>
+
+
+<style>
+.ground-card {
+  position: relative;
+  overflow: hidden;
+  background-color: #d4edda; /* Light green */
+  border: 2px solid transparent;
+  transition: transform 0.3s ease-in-out, background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+/* Hover Effect */
+.ground-card:hover {
+  background-color: #b8e0c2; /* Slightly darker green on hover */
+  transform: scale(1.05);
+  box-shadow: 4px 4px 15px rgba(0, 255, 0, 0.7);
+}
+</style>

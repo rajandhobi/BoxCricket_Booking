@@ -1,0 +1,29 @@
+<h2>All Bookings</h2>
+
+<table class="table table-bordered">
+  <thead class="thead-dark">
+    <tr>
+      <th>ID</th>
+      <th>Slot ID</th>
+      <th>User</th>
+      <th>Status</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @bookings.each do |booking| %>
+      <tr>
+        <td><%= booking.id %></td>
+        <td><%= booking.slot_id %></td>
+        <td><%= booking.user.email %></td>
+        <td><%= booking.status.capitalize %></td>
+        <td>
+          <%= link_to 'View', branch_ground_slot_booking_path(booking.slot.ground.branch, booking.slot.ground, booking.slot), class: 'btn btn-primary btn-sm' %>
+          <% if current_user.has_role?(:admin) %>
+            <%= link_to 'Delete', branch_ground_slot_booking_path(booking.slot.ground.branch, booking.slot.ground, booking.slot), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm' %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

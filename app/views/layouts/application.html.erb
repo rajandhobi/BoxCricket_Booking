@@ -2,7 +2,7 @@
 <html>
   <head>
     <title><%= content_for(:title) || "Box Cricket Booking" %></title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
     <%= csrf_meta_tags %>
@@ -10,45 +10,81 @@
 
     <%= yield :head %>
 
-    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
-    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
-
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
 
-    <%# Includes all stylesheet files in app/assets/stylesheets %>
-<%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+
+    <%= stylesheet_link_tag "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
+  <body class="d-flex flex-column min-vh-100">
+  <nav class="navbar navbar-expand-md navbar-dark bg-success">
+      <div class="container">
+      <!-- Logo -->
+      <%= link_to root_path, class: "navbar-brand me-2" do %>
+        <%= image_tag "image.png", alt: "Avatar Logo", style: "width:60px;", class: "rounded-pill" %>
+      <% end %>
+        <a class="navbar-brand" href="#">BoxCrick</a>
+        <%= link_to "Home", root_path, class: "btn btn-light text-dark ms-2" %>
 
-  <% if user_signed_in? %>
-  <p>
-    Logged in as <%= current_user.email %> |
-    <%= link_to 'Edit Profile', edit_user_registration_path %> |
-<%= button_to 'Sign Out', destroy_user_session_path, method: :delete %>
-  </p>
-<% else %>
-  <p>
-    <%= link_to 'Sign In', new_user_session_path %> |
-    <%= link_to 'Sign Up', new_user_registration_path %>
-  </p>
-<% end %>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <% if user_signed_in? %>
+              <li class="nav-item">
+                <span class="nav-link text-white">Logged in as <%= current_user.email %></span>
+              </li>
+              <li class="nav-item">
+                <%= link_to 'Edit Profile', edit_user_registration_path, class: "btn btn-warning btn-sm ms-2" %>
+              </li>
+              <li class="nav-item">
+                <%= button_to 'Sign Out', destroy_user_session_path, method: :delete, class: "btn btn-danger btn-sm ms-2" %>
+              </li>
+            <% else %>
+              <li class="nav-item">
+                <%= link_to 'Sign In', new_user_session_path, class: "btn btn-primary btn-sm mx-2" %>
+              </li>
+              <li class="nav-item">
+                <%= link_to 'Sign Up', new_user_registration_path, class: "btn btn-success btn-sm" %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </nav>
 
-  <% if user_signed_in? %>
+    <div class="container mt-4">
+      <% if user_signed_in? %>
+      <div class="container mt-3 text-center">
+        <h3 class="text-primary">
+          Role: 
+          <span class="badge bg-warning text-dark"><%= current_user&.roles&.first&.name || "user" %>      </span>
+        </h3>
+      </div>
+      <% end %>
 
+      
+      <%= yield %>
+    </div>
 
-<p>Role: <%= current_user&.roles&.first&.name || "User" %></p>
+    <footer class="bg-success text-white text-center p-3 mt-auto">
+    <div class="container">
+      <p class="mb-0">
+      <%= image_tag "image.png", alt: "Avatar Logo", style: "width:60px;", class: "rounded-pill" %>
 
-<% end %>
+        &copy; <%= Time.current.year %> Book Your Cricket Turf Now! All Rights Reserved.
+      </p>
+    </div>
+  </footer>
 
-
-<!-- <p class="notice"><%= notice %></p> -->
-<!-- <p class="alert"><%= alert %></p> -->
-
- 
-    <%= yield %>
+    <!-- Bootstrap JS Bundle -->
+    <%= javascript_include_tag "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" %>
   </body>
 </html>

@@ -10,20 +10,20 @@ class GroundsController < ApplicationController
   # GET /grounds or /grounds.json
   def index
     @branch = Branch.find(params[:branch_id])
-  
     if current_user.has_role?(:superadmin)
-      @grounds = @branch.grounds  # Superadmin sees all grounds
+      @grounds = @branch.grounds
+    elsif current_user.has_role?(:admin)
+      @grounds = @branch.grounds.where(user_id: current_user.id) # Only show grounds created by the admin
     else
-      @grounds = @branch.grounds.where(user: current_user)  # Admins only see their own grounds
+      @grounds = @branch.grounds # Regular users see all grounds
     end
+    # @grounds = @branch.grounds
   end
   
 
   # GET /grounds/1 or /grounds/1.json
   def show
-    
     authorize @ground
-
   end
 
   # GET /grounds/new
@@ -40,11 +40,22 @@ class GroundsController < ApplicationController
     @ground = @branch.grounds.find(params[:id])
   end
 
-  
+  # POST /grounds or /grounds.json
+
+  # def create
+  #   @ground = Ground.new(ground_params)
+  #   if @ground.save
+  #     redirect_to @ground, notice: "Ground was successfully created."
+  #   else
+  #     render :new
+  #   end
+  # end
 
   def create
     @ground = @branch.grounds.new(ground_params)
-    @ground.user = current_user  # Assign ground to the currently logged-in user    authorize @ground
+    @ground.user = current_user  # ✅ Assign the logged-in user
+
+    authorize @ground
 
 
     respond_to do |format|
@@ -94,20 +105,9 @@ class GroundsController < ApplicationController
       redirect_to branches_path, alert: "Branch not found" if @branch.nil?
     end
 
-    # def set_ground
-    #   @ground = @branch.grounds.find(params[:id]) if @branch
-    # end
     def set_ground
-      @ground = @branch.grounds.find(params[:id])
-    
-      # Ensure only superadmins or the ground's owner can access it
-      if current_user.has_role?(:superadmin) || @ground.user == current_user
-        @ground
-      else
-        redirect_to branch_grounds_path(@branch), alert: "You are not authorized to access this ground."
-      end
+      @ground = @branch.grounds.find(params[:id]) if @branch
     end
-    
 
     def authorize_ground
       authorize @ground
