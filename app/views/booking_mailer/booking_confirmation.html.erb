@@ -1,0 +1,13 @@
+<h1>Booking Confirmed!</h1>
+
+<p>Hello <%= @user.email %>,</p>
+
+<p>Your slot has been successfully booked.</p>
+
+<p><strong>Booking Details:</strong></p>
+<ul>
+  <li><strong>Slot ID:</strong> <%= @booking.slot.id %></li>
+  <li><strong>Status:</strong> <%= @booking.status %></li>
+</ul>
+
+<p>Thank you for booking with us!</p>

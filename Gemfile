@@ -79,3 +79,10 @@ gem "ransack", "~> 4.3"
 
 gem 'bootstrap', '~> 5.3.3'
 gem 'sassc-rails'
+
+group :development do
+  gem 'letter_opener'   
+end
+gem 'stripe'
+
+gem "dotenv-rails", "~> 3.1"

@@ -41,6 +41,12 @@
   </table>
 <% end %>
 
+<% if current_user.has_role?(:admin) && @ground.slots.any? %>
+  <% slot = @ground.slots.first %>
+  <%= link_to "View Bookings", bookings_branch_ground_slot_booking_path(@ground.branch, @ground, slot), class: "btn btn-success" %>
+<% end %>
+
+
 <% if current_user.has_role?(:user) %>
   <h2 class="mt-4">Available Slots</h2>
 

@@ -1,0 +1,18 @@
+<h2>Confirm Payment</h2>
+<p>Booking for: <%= @slot.start_time.strftime("%I:%M %p") %> - <%= @slot.end_time.strftime("%I:%M %p") %></p>
+<p>Price: ₹<%= @slot.price %></p>
+
+<form action="<%= branch_ground_slot_booking_payments_path(@booking) %>" method="post">
+  <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+  <%= hidden_field_tag :booking_id, @booking.id %>
+
+  <script src="https://checkout.stripe.com/checkout.js"
+          class="stripe-button"
+          data-key="<%= ENV['STRIPE_PUBLISHABLE_KEY'] %>" 
+          data-amount="<%= (@slot.price * 100).to_i %>" 
+          data-currency="inr" 
+          data-name="Booking Payment" 
+          data-description="Payment for your slot" 
+          data-email="<%= current_user.email %>">
+  </script>
+</form>

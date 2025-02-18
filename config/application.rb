@@ -3,6 +3,8 @@ require_relative "boot"
 require "rails/all"
 require 'rolify'
 require 'ransack'
+require 'dotenv'
+Dotenv.load
 
 
 

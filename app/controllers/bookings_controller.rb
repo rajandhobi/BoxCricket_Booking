@@ -3,36 +3,43 @@ class BookingsController < ApplicationController
     before_action :authorize_admin_or_owner, only: [:show]
 
 
-    # def index
-    #   if current_user.has_role?(:admin) # Only admins can view all bookings
-    #     @bookings = Booking.includes(:slot, :user).all
-    #   else
-    #     @bookings = Booking.includes(:slot, :user).where(user: current_user) # Normal users see only their bookings
-    #   end
-    # end
+    def index
+      if current_user.has_role?(:admin)
+        @ground = Ground.find(params[:ground_id])  # Ensure admin sees only their ground’s bookings
+        @bookings = @ground.slots.joins(:booking).includes(:booking).map(&:booking).compact
+      else
+        @bookings = Booking.includes(:slot, :user).where(user: current_user)
+      end
+    end
     
     def show
       @slot = Slot.find(params[:slot_id])
-      @booking = @slot.booking # Ensure booking is loaded
-      @user = @booking.user if @booking.present? # Fetch the user who booked the slot
-
-    end
-      
+      @booking = @slot.booking
+      @ground = @slot.ground
+      @branch = @ground.branch
+      @user = @booking.user if @booking.present?
   
+      # Ensure admin can see only bookings of their own ground
+      if current_user.has_role?(:admin) && @slot.ground.branch.user != current_user
+        redirect_to root_path, alert: "Access denied! You are not authorized to view this booking."
+      end
+    end
+    
+
+
     def create
       @slot = Slot.find_by(id: params[:slot_id])
       if @slot.nil?
         redirect_to branch_ground_slots_path(@branch, @ground), alert: "Slot not found" and return
       end
-  
+    
       authorize @slot, :book?
-  
+    
       if @slot.status == "available"
-        puts "in slot"
-        @booking = @slot.create_booking(user: current_user, status: "booked")
-  
+        @booking = @slot.create_booking(user: current_user, status: "pending") # Status set to pending
+    
         if @booking.persisted?
-          redirect_to branch_ground_path(@slot.ground.branch, @slot.ground), notice: "Slot successfully booked!"
+          redirect_to new_branch_ground_slot_booking_payment_path(booking_id: @booking.id), notice: "Slot successfully booked! Proceed to payment."
         else
           redirect_to branch_ground_path(@slot.ground.branch, @slot.ground), alert: "Booking failed."
         end
@@ -40,29 +47,8 @@ class BookingsController < ApplicationController
         redirect_to branch_ground_path(@slot.ground.branch, @slot.ground), alert: "Slot is already booked."
       end
     end
+    
   
-    # def destroy
-    #   booking = Booking.find_by(params[:id])  # ✅ Find booking
-    #   if booking
-    #     slot = booking.slot  # ✅ Get associated slot
-    #     if booking.destroy
-    #       puts "Booking deleted successfully."
-    #       puts slot
-    #       if slot.update(status: "available")
-    #         puts "Slot status updated to available."
-    #       else
-    #         puts "Failed to update slot status."
-    #       end
-    #       redirect_to request.referer, notice: "Booking deleted successfully."
-    #     else
-    #       puts "Booking deletion failed."
-    #       redirect_to request.referer, alert: "Failed to delete booking."
-    #     end
-    #   else
-    #     puts "Booking not found."
-    #     redirect_to root_path, alert: "Booking not found."
-    #   end
-    # end
 
 
     def destroy
